@@ -8,6 +8,8 @@
 	<script src="./node_modules/codemirror/lib/codemirror.js"></script>
 	<script src="./node_modules/codemirror/mode/xml/xml.js"></script>
 	<script src="./node_modules/codemirror/mode/css/css.js"></script>
+	<script src="./node_modules/codemirror/mode/javascript/javascript.js"></script>
+	<script src="./node_modules/codemirror/mode/jsx/jsx.js"></script>
 	<script src="./node_modules/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 	<script src="./node_modules/codemirror/addon/hint/show-hint.js"></script>
 	<script src="./dist/emmet-codemirror-plugin.js"></script>
@@ -60,26 +62,38 @@
 	<h1>Emmet for CodeMirror 5</h1>
 
 	<form><textarea id="code" name="code">
-&lt;html style="color: green"&gt;
-  &lt;style&gt;
-    body {
-	  padding: 10px;
-	}
-  &lt;/style&gt;
-  &lt;!-- this is a comment --&gt;
-  &lt;head&gt;
-    &lt;title&gt;HTML Example&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-	The indentation tries to be &lt;em&gt;somewhat &amp;quot;do what I mean&amp;quot;&lt;/em&gt;... 
-	but might not match your style.
-  &lt;/body&gt;
-&lt;/html&gt;
-	</textarea></form>
+let { 
+  DefaultButton,
+  Fabric
+} = window.Fabric;
+
+class Content extends React.Component {
+  constructor() {
+   super(); 
+  }
+  
+  render() {
+    return (
+      &lt;Fabric className='foo'&gt;
+        &lt;Fabric.DefaultButton
+          onClick= {() => alert('hello')}
+        &gt;
+          Hello World
+        &lt;/Fabric.DefaultButton&gt;
+      &lt;/Fabric&gt;
+    );
+  }
+}
+
+ReactDOM.render( 
+  &lt;Content /&gt;,
+  document.getElementById('content')
+);
+</textarea></form>
 
 	<script>
 		var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-			mode : "text/html",
+			mode : "text/jsx",
 			lineNumbers : true,
 			markTagPairs: true,
 			autoRenameTags: true,
