@@ -42,12 +42,18 @@ export default function registerEmmetExtension(CodeMirror) {
 	CodeMirror.defineOption('markTagPairs', false, (editor, value) => {
 		if (value) {
 			editor.on('cursorActivity', matchTag);
-			editor.on('change', resetCachedModel);
 		} else {
 			editor.off('cursorActivity', matchTag);
-			editor.off('change', resetCachedModel);
 			resetCachedModel(editor);
 			clearTagMatch(editor);
+		}
+	});
+
+	CodeMirror.defineOption('cacheEmmetModel', true, (editor, value) => {
+		if (value) {
+			editor.on('change', resetCachedModel);
+		} else {
+			editor.off('change', resetCachedModel);
 		}
 	});
 
@@ -152,7 +158,7 @@ export default function registerEmmetExtension(CodeMirror) {
 
 	CodeMirror.defineExtension('getEmmetDocumentModel', function() {
 		const editor = this;
-		return editor.getOption('markTagPairs')
+		return editor.getOption('cacheEmmetModel')
 			? getCachedModel(editor)
 			: getModel(editor);
 	});
